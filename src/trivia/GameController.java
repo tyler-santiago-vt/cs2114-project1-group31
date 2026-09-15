@@ -1,10 +1,13 @@
 package trivia;
 import java.util.Arrays;
+
 public class GameController
 {
     //~ Fields ................................................................
 
     private ScoreTracker score;
+    
+    private int userScore = score.getScore();
     
     //~ Constructors ..........................................................
 
@@ -19,6 +22,7 @@ public class GameController
             message = "Incorrect, Game Over! Score: ";
         }
         
+        System.out.println(message + userScore);
     }
     
     public void endCategory()
