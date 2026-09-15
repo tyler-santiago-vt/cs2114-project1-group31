@@ -1,4 +1,5 @@
 package trivia;
+import java.util.Arrays;
 public class GameController
 {
     //~ Fields ................................................................
@@ -32,7 +33,14 @@ public class GameController
     
     public boolean validAnswer(String answer)
     {
+        String formattedAnswer = answer.trim().toLowerCase();
         
+        if (Arrays.asList("a", "b", "c", "d").contains(formattedAnswer))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public boolean validCategory(String category)
