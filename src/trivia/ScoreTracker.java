@@ -50,7 +50,7 @@ public class ScoreTracker
 
 
     /**
-     * resetScore resets the score back to the intital value of 0.
+     * resetScore resets the score back to the initial value of 0.
      */
     public void resetScore()
     {
