@@ -1,5 +1,6 @@
 package trivia;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class GameController
 {
@@ -8,6 +9,7 @@ public class GameController
     private ScoreTracker score;
     
     private int userScore = score.getScore();
+    Scanner input = new Scanner(System.in);
     
     //~ Constructors ..........................................................
 
@@ -58,6 +60,59 @@ public class GameController
             return true;
         } else {
             return false;
+        }
+    }
+    
+    public String selectAnswer(String answer)
+    {
+        boolean validAnswer = false;
+        String userInput = "";
+        
+        while (validAnswer == false)
+        {
+            System.out.println("Select an answer from the choices above");
+            userInput = input.nextLine();
+            if (validAnswer(userInput))
+            {
+                return userInput.toUpperCase();
+            } else {
+                System.out.println("Invalid input. Please input 'a', 'b', 'c', or 'd' to select the desired answer choice");
+            }
+        }
+    }
+    
+    public String selectCategory(String category)
+    {
+        boolean validCategory = false;
+        String userInput = "";
+        
+        while (validCategory == false)
+        {
+            System.out.println("Select a category: A) Animals, B) Music, C) Geography, D) People, E) History");
+            userInput = input.nextLine();
+            if (validCategory(userInput))
+            {
+                switch (userInput.toUpperCase()) {
+                    case "A":
+                        return "animals";
+                        break;
+                    case "B":
+                        return "music";
+                        break;
+                    case "C":
+                        return "geography";
+                        break;
+                    case "D":
+                        return "people";
+                        break;
+                    case "E":
+                        return "history";
+                        break;
+                }
+            } else {
+                System.out.println("Invalid selection. Please input 'A', 'B', 'C', 'D', or 'E' to select the desired category.");
+            }
+            
         }
     }
     
