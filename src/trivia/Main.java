@@ -1,3 +1,7 @@
+
+
+
+
 package trivia;
 
 
@@ -22,8 +26,10 @@ public class Main
 
         ScoreTracker score = new ScoreTracker();
         Question questions;
-        GameController game = new GameController();
+        Question[] currectCategory;
         QuestionBank questionBank;
+        GameController game = new GameController(score, questionBank);
+     
         boolean validity = false;
         boolean gameOver = false;
         int questionNumber = 0;
@@ -38,7 +44,7 @@ public class Main
 
         String userInput = input.nextLine();
 
-        while (!validity)
+        /**while (!validity)
         {
 
             if (userInput.equalsIgnoreCase("Music"))
@@ -77,14 +83,17 @@ public class Main
             }
 
         }
-
+**/
         
+        for(int i = 0; i < currentCategory[i]; i++ ) {
          questions = questions.getQuestion(category, questionNumber);
          questions.getPrompt(); 
          answer = input.nextLine();
-         game.
-         questions.validAnswer(answer);
-         
+         game.selectAnswer(answer);
+        questions.checkSolution(answer);
+        
+        
+        }
          
 
     }
