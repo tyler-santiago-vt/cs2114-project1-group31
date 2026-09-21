@@ -7,6 +7,7 @@ public class GameController
     //~ Fields ................................................................
 
     private ScoreTracker score;
+    private Question question;
     public int questionNumber;
     
     private Question[] currentCategoryQuestions;
@@ -42,9 +43,35 @@ public class GameController
         System.out.println("You have answered all the quesstions in this category! Your score so far is: " + userScore);
     }
     
-    public void nextQuestion()
-    {
-        
+    public void nextQuestion() {
+        question = currentCategoryQuestions[questionNumber];
+
+        System.out.println(question.getPrompt());
+        for (String answer : question.getAnswers()) {
+            System.out.println(answer);
+        }
+
+        String userAnswer = "";
+        boolean valid = false;
+        while (!valid) {
+            System.out.print("Your answer: ");
+            userAnswer = input.nextLine().trim();
+            valid = validAnswer(userAnswer);
+            if (!valid) {
+                System.out.println("Please enter A, B, C, or D.");
+            }
+        }
+
+        lastAnswerCorrect = question.checkSolution(userAnswer);
+        if (lastAnswerCorrect) {
+            score.increaseScore();
+            System.out.println("Correct!");
+            questionNumber++;
+        } else {
+            System.out.println("Incorrect. The correct answer was: " + question.getCorrectAnswerText());
+            gameOver = true;
+            endGame();
+        }
     }
     
     public boolean validAnswer(String answer)
