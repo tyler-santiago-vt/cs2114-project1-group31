@@ -158,4 +158,8 @@ public class GameController
         return !gameOver && currentCategoryQuestions != null && questionNumber < currentCategoryQuestions.length;
     }
     
+    public void endGame() {
+        System.out.println("Game over! Your final score is: " + score.getScore());
+    }
+    
 }
