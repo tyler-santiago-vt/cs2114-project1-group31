@@ -49,12 +49,7 @@ public class GameController
         String formattedAnswer = answer.trim().toLowerCase();
         
         // 4 answer choices (a -> d)
-        if (Arrays.asList("a", "b", "c", "d").contains(formattedAnswer))
-        {
-            return true;
-        } else {
-            return false;
-        }
+        return (Arrays.asList("a", "b", "c", "d").contains(formattedAnswer));
     }
     
     public boolean validCategory(String category)
@@ -62,12 +57,7 @@ public class GameController
         String formattedCategory = category.trim().toLowerCase();
         
         // 5 category choices (a -> e)
-        if (Arrays.asList("a", "b", "c", "d", "e").contains(formattedCategory))
-        {
-            return true;
-        } else {
-            return false;
-        }
+        return (Arrays.asList("a", "b", "c", "d", "e").contains(formattedCategory));
     }
     
     public String selectAnswer(String answer)
