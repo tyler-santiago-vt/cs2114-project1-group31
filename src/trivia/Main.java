@@ -1,55 +1,91 @@
 package trivia;
 
+
 import java.util.Scanner;
 
-/**
- * // -------------------------------------------------------------------------
- * /** Write a one-sentence summary of your class here. Follow it with
- * additional details about its purpose, what abstraction it represents, and how
- * to use it.
- * 
- * @author poornabhat
- * @version Sep 15, 2026
- */
+
 public class Main
 {
-    /**
-     * 
-     */
+
     public static void main(String[] args)
     {
+
+        // TODO Auto-generated method stub
+
+    
+    //~ Fields ................................................................
+
+    //~ Constructors ..........................................................
+
+    //~Public  Methods ........................................................
+
+
         ScoreTracker score = new ScoreTracker();
         Question questions;
         GameController game = new GameController();
         QuestionBank questionBank;
+        boolean validity = false;
+        boolean gameOver = false;
+        int questionNumber = 0;
+        String category = null;
+        String answer = null;
+
+        System.out.print("Welcome to Super Trivia!! " + "\n" + "\n");
 
         Scanner input = new Scanner(System.in);
         System.out.print(
-            "Please pick a catergory: Music, History, People, or Geography");
+            "Please pick a catergory: Music, History, People, or Geography: ");
 
         String userInput = input.nextLine();
 
-        if (userInput.equalsIgnoreCase("Music"))
+        while (!validity)
         {
 
-        }
-        else if (userInput.equalsIgnoreCase("History"))
-        {
+            if (userInput.equalsIgnoreCase("Music"))
+            {
+                validity = true;
+                category = "Music";
+                break;
+            }
+            else if (userInput.equalsIgnoreCase("History"))
+            {
+                validity = true;
+                category = "History";
+                break;
+            }
+            else if (userInput.equalsIgnoreCase("People"))
+            {
+                validity = true;
+                category = "People";
+                break;
+            }
+            else if (userInput.equalsIgnoreCase("Geography"))
+            {
+                validity = true;
+                category = "Geography";
+                break;
+            }
+            else
+            {
+                validity = false;
+                System.out.print(
+                    "Not a valid catergory... Try again!" + "\n " + "\n");
+                System.out.print(
+                    "Please pick a catergory: Music, History, People, or Geography: ");
+                userInput = input.nextLine();
+
+            }
 
         }
-        else if (userInput.equalsIgnoreCase("People"))
-        {
 
-        }
-        else if (userInput.equalsIgnoreCase("Geography"))
-        {
-
-        }
-        else
-        {
-            System.out.print("Not a valid catergory. Try Again!");
-            userInput = input.nextLine();
-        }
+        
+         questions = questions.getQuestion(category, questionNumber);
+         questions.getPrompt(); 
+         answer = input.nextLine();
+         game.
+         questions.validAnswer(answer);
+         
+         
 
     }
 
