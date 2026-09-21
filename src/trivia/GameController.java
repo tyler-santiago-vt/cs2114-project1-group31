@@ -117,4 +117,11 @@ public class GameController
     public boolean isGameOver() {
         return gameOver;
     }
+    
+    public void resetGame() {
+        gameOver = false;
+        questionNumber = 0;
+        currentCategoryQuestions = null;
+        score.resetScore();
+    }
 }
