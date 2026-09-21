@@ -9,6 +9,7 @@ public class GameController
     private ScoreTracker score;
     public int questionNumber;
     
+    private boolean gameOver;
     private int userScore = score.getScore();
     Scanner input = new Scanner(System.in);
     
@@ -113,4 +114,7 @@ public class GameController
         }
     }
     
+    public boolean isGameOver() {
+        return gameOver;
+    }
 }
