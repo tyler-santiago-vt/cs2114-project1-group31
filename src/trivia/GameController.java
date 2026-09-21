@@ -26,6 +26,10 @@ public class GameController
     
     //~Public  Methods ........................................................
 
+    /**
+     * Displays the user's score and prints either a win or lose message
+     * based on if the user won or lost.
+     */
     public void endGame(boolean win)
     {
         String message;
@@ -38,11 +42,19 @@ public class GameController
         System.out.println(message + userScore);
     }
     
+    /**
+     * Displays the user's score after finishing a category.
+     */
     public void endCategory()
     {
         System.out.println("You have answered all the quesstions in this category! Your score so far is: " + userScore);
     }
     
+    /**
+     * Sets the current question to the next one up in the question array
+     * from the selected category, prints the question prompt + possible
+     * answers, and prompts the user for an answer.
+     */
     public void nextQuestion() {
         question = currentCategoryQuestions[questionNumber];
 
@@ -74,6 +86,9 @@ public class GameController
         }
     }
     
+    /**
+     * Returns if the given answer is valid
+     */
     public boolean validAnswer(String answer)
     {
         String formattedAnswer = answer.trim().toLowerCase();
@@ -82,6 +97,9 @@ public class GameController
         return (Arrays.asList("a", "b", "c", "d").contains(formattedAnswer));
     }
     
+    /**
+     * Returns if the given category is valid
+     */
     public boolean validCategory(String category)
     {
         String formattedCategory = category.trim().toLowerCase();
@@ -90,6 +108,11 @@ public class GameController
         return (Arrays.asList("a", "b", "c", "d", "e").contains(formattedCategory));
     }
     
+    /**
+     * Prompts the user to select and answer. If the user has a valid input,
+     * it returns the selected answer. Otherwise, it re-prompts the user
+     * to input a valid answer.
+     */
     public String selectAnswer(String answer)
     {
         boolean validAnswer = false;
@@ -108,6 +131,10 @@ public class GameController
         }
     }
     
+    /**
+     * Prompts the user to select a category. If the user input is valid,
+     * returns the category. Otherwise, prompts the user for a valid input
+     */
     public String selectCategory(String category)
     {
         boolean validCategory = false;
@@ -143,10 +170,16 @@ public class GameController
         }
     }
     
+    /**
+     * Returns if gameOver has been set to true or not
+     */
     public boolean isGameOver() {
         return gameOver;
     }
     
+    /**
+     * Resets the game by changing all values to their defaults
+     */
     public void resetGame() {
         gameOver = false;
         questionNumber = 0;
@@ -154,10 +187,16 @@ public class GameController
         score.resetScore();
     }
     
+    /**
+     * Returns whether or not there are more questions left in the current category
+     */
     public boolean hasMoreQuestions() {
         return !gameOver && currentCategoryQuestions != null && questionNumber < currentCategoryQuestions.length;
     }
     
+    /**
+     * Displays the user's score when ending the game
+     */
     public void endGame() {
         System.out.println("Game over! Your final score is: " + score.getScore());
     }
