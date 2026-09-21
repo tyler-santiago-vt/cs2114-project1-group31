@@ -7,12 +7,19 @@ public class GameController
     //~ Fields ................................................................
 
     private ScoreTracker score;
+    public int questionNumber;
     
     private int userScore = score.getScore();
     Scanner input = new Scanner(System.in);
     
     //~ Constructors ..........................................................
 
+    public GameController(ScoreTracker score, QuestionBank questionBank) {
+        this.score = score;
+        this.questionBank = questionBank;
+        this.questionNumber = 0;
+    }
+    
     //~Public  Methods ........................................................
 
     public void endGame(boolean win)
