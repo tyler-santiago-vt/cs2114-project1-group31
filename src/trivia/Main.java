@@ -43,6 +43,10 @@ public class Main
             "Please pick a catergory: Music, History, People, or Geography: ");
 
         String userInput = input.nextLine();
+        
+        game.validCategory(userInput);
+        game.selectCategory(userInput);
+        
 
         /**while (!validity)
         {
@@ -85,15 +89,15 @@ public class Main
         }
 **/
         
-        for(int i = 0; i < currentCategory[i]; i++ ) {
+        
          questions = questions.getQuestion(category, questionNumber);
          questions.getPrompt(); 
          answer = input.nextLine();
          game.selectAnswer(answer);
         questions.checkSolution(answer);
+        game.nextQuestion();
         
         
-        }
          
 
     }
