@@ -4,17 +4,19 @@ package trivia;
 /**
  * ScoreTracker class keeps track of the user's score throughout the trivia
  * round. It can increase, retrieve, and reset the score through a variable.
- * 
- * @author poornabhat
- * @version Sep 15, 2026
+ *
+ * @author Poorna Bhat
+ * @version Sep 22, 2026
  */
 public class ScoreTracker
 {
     // ~ Fields ................................................................
     /**
-     * score variable stores the user's score throughout the trivia game.
+     * Stores the user's score throughout the trivia game. Kept private so
+     * the score can only change through increaseScore()/resetScore(),
+     * rather than being reassigned directly from outside the class.
      */
-    public int score;
+    private int score;
 
     // ~ Constructors ..........................................................
     /**
@@ -40,8 +42,8 @@ public class ScoreTracker
 
     /**
      * getScore returns the current value of the score variable.
-     * 
-     * @return score
+     *
+     * @return the current score
      */
     public int getScore()
     {

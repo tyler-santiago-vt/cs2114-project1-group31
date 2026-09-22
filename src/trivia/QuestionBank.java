@@ -1,28 +1,31 @@
 package trivia;
+
 /**
- ** -------------------------------------------------------------------------
-/**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
- * 
+ *  Holds the full set of trivia questions, grouped into five categories
+ *  (animals, music, geography, people, history), and provides lookup
+ *  methods for retrieving a category's questions by its menu letter
+ *  ("A" through "E") or by name.
+ *
  *  @author Aishwarya Shah
- *  @version Sep 21, 2026
+ *  @version Sep 22, 2026
  */
 public class QuestionBank
 {
     //~ Fields ................................................................
-    public Question[] peopleQuestions;
-    public Question[] musicQuestions;
-    public Question[] historyQuestions;
-    public Question[] geographyQuestions;
-    public Question[] animalQuestions;
-
+    private final Question[] peopleQuestions;
+    private final Question[] musicQuestions;
+    private final Question[] historyQuestions;
+    private final Question[] geographyQuestions;
+    private final Question[] animalQuestions;
 
     //~ Constructors ..........................................................
+    /**
+     * Builds the question bank, populating all five category arrays with
+     * their fixed set of trivia questions.
+     */
     public QuestionBank()
     {
-     // 1. people questions
+        // 1. people questions
         peopleQuestions = new Question[] {
             new Question("Who was the first person to walk on the Moon?",
                 new String[] {"A) Buzz Aldrin", "B) Neil Armstrong", "C) "
@@ -194,46 +197,156 @@ public class QuestionBank
                 new String[] {"A) Lion", "B) Jaguar", "C) Tiger", "D) Leopard"},
                 "C")
         };
-        }
+    }
 
 
     //~Public  Methods ........................................................
-        /**
-         * Returns the question object specified by category and
-         * questionIndex/questionNumber.
-         *
-         * @param category The string name or code of the category
-         * @param questionNumber The index of the question in the array (0 to 9)
-         * @return the requested Question object or null if category is invalid
-         */
-        public Question getQuestion(String category, int questionNumber)
+
+    /**
+     * Returns the animal-category questions.
+     *
+     * @return the animal questions array
+     */
+    public Question[] getAnimalQuestions()
+    {
+        return animalQuestions;
+    }
+
+    /**
+     * Returns the music-category questions.
+     *
+     * @return the music questions array
+     */
+    public Question[] getMusicQuestions()
+    {
+        return musicQuestions;
+    }
+
+    /**
+     * Returns the geography-category questions.
+     *
+     * @return the geography questions array
+     */
+    public Question[] getGeographyQuestions()
+    {
+        return geographyQuestions;
+    }
+
+    /**
+     * Returns the people-category questions.
+     *
+     * @return the people questions array
+     */
+    public Question[] getPeopleQuestions()
+    {
+        return peopleQuestions;
+    }
+
+    /**
+     * Returns the history-category questions.
+     *
+     * @return the history questions array
+     */
+    public Question[] getHistoryQuestions()
+    {
+        return historyQuestions;
+    }
+
+    /**
+     * Maps a category letter ("A"-"E") or name (e.g. "animals") to its
+     * canonical menu letter, case-insensitively. This is the single
+     * source of truth all other lookups build on.
+     *
+     * @param category the category letter or name
+     * @return the canonical letter ("A"-"E"), or null if unrecognized
+     */
+    private static String resolveLetter(String category)
+    {
+        if (category == null)
         {
-            if (category.equalsIgnoreCase("People") ||
-                category.equalsIgnoreCase("A"))
-            {
-                return peopleQuestions[questionNumber];
-            }
-            else if (category.equalsIgnoreCase("Music") ||
-                category.equalsIgnoreCase("B"))
-            {
-                return musicQuestions[questionNumber];
-            }
-            else if (category.equalsIgnoreCase("History") ||
-                category.equalsIgnoreCase("C"))
-            {
-                return historyQuestions[questionNumber];
-            }
-            else if (category.equalsIgnoreCase("Geography") ||
-                category.equalsIgnoreCase("D"))
-            {
-                return geographyQuestions[questionNumber];
-            }
-            else if (category.equalsIgnoreCase("Animals") ||
-                category.equalsIgnoreCase("E"))
-            {
-                return animalQuestions[questionNumber];
-            }
-           
             return null;
         }
-     }
+
+        switch (category.trim().toUpperCase())
+        {
+            case "A": case "ANIMALS":   return "A";
+            case "B": case "MUSIC":     return "B";
+            case "C": case "GEOGRAPHY": return "C";
+            case "D": case "PEOPLE":    return "D";
+            case "E": case "HISTORY":   return "E";
+            default:  return null;
+        }
+    }
+
+    /**
+     * Maps a category letter ("A"-"E") or name (e.g. "animals") to its
+     * question array, case-insensitively.
+     *
+     * @param category the category letter or name
+     * @return the matching category's questions, or null if category is
+     *         unrecognized
+     */
+    public Question[] getQuestionsForCategory(String category)
+    {
+        String letter = resolveLetter(category);
+
+        if (letter == null)
+        {
+            return null;
+        }
+
+        switch (letter)
+        {
+            case "A": return animalQuestions;
+            case "B": return musicQuestions;
+            case "C": return geographyQuestions;
+            case "D": return peopleQuestions;
+            default:  return historyQuestions; // "E"
+        }
+    }
+
+    /**
+     * Maps a category letter ("A"-"E") or name (e.g. "animals") to its
+     * lowercase category name, case-insensitively.
+     *
+     * @param category the category letter or name
+     * @return the lowercase category name, or an empty string if
+     *         category is unrecognized
+     */
+    public String getCategoryName(String category)
+    {
+        String letter = resolveLetter(category);
+
+        if (letter == null)
+        {
+            return "";
+        }
+
+        switch (letter)
+        {
+            case "A": return "animals";
+            case "B": return "music";
+            case "C": return "geography";
+            case "D": return "people";
+            default:  return "history"; // "E"
+        }
+    }
+
+    /**
+     * Returns the question object specified by category and
+     * questionNumber. The category may be given either as a menu letter
+     * ("A"-"E") or as a category name (e.g. "animals"), case-insensitive.
+     *
+     * @param category the letter or name of the category
+     * @param questionNumber the index of the question in the array (0-9)
+     * @return the requested Question object, or null if category is
+     *         unrecognized
+     * @throws IndexOutOfBoundsException if questionNumber is outside the
+     *         bounds of the category's question array
+     */
+    public Question getQuestion(String category, int questionNumber)
+    {
+        Question[] categoryQuestions = getQuestionsForCategory(category);
+        return categoryQuestions == null ? null : categoryQuestions[questionNumber];
+    }
+}

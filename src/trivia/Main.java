@@ -1,105 +1,56 @@
-
-
-
-
 package trivia;
 
-
-import java.util.Scanner;
-
-
+/**
+ * Entry point for the Super Trivia console game. Repeatedly presents a
+ * category of 10 questions at a time; the round ends the moment the
+ * player answers a question incorrectly, or once every category has been
+ * completed (a win).
+ *
+ * @author Poorna Bhat
+ * @version Sep 22, 2026
+ */
 public class Main
 {
-
+    /**
+     * Runs the Super Trivia game: greets the player, lets them pick a
+     * category, then loops through questions and categories until the
+     * player either answers incorrectly or completes every category.
+     *
+     * @param args command-line arguments (unused)
+     */
     public static void main(String[] args)
     {
-
-        // TODO Auto-generated method stub
-
-    
-    //~ Fields ................................................................
-
-    //~ Constructors ..........................................................
-
-    //~Public  Methods ........................................................
-
-
         ScoreTracker score = new ScoreTracker();
-        Question questions;
-        Question[] currectCategory;
-        QuestionBank questionBank;
+        QuestionBank questionBank = new QuestionBank();
         GameController game = new GameController(score, questionBank);
-     
-        boolean validity = false;
-        boolean gameOver = false;
-        int questionNumber = 0;
-        String category = null;
-        String answer = null;
 
-        System.out.print("Welcome to Super Trivia!! " + "\n" + "\n");
+        System.out.println("Welcome to Super Trivia!!");
 
-        Scanner input = new Scanner(System.in);
-        System.out.print(
-            "Please pick a catergory: Music, History, People, or Geography: ");
+        game.selectCategory();
+        System.out.println("You have selected the category: " + game.getCategory());
 
-        String userInput = input.nextLine();
-        
-        game.validCategory(userInput);
-        game.selectCategory(userInput);
-        
-
-        /**while (!validity)
+        while (true)
         {
-
-            if (userInput.equalsIgnoreCase("Music"))
+            while (game.hasMoreQuestions())
             {
-                validity = true;
-                category = "Music";
-                break;
-            }
-            else if (userInput.equalsIgnoreCase("History"))
-            {
-                validity = true;
-                category = "History";
-                break;
-            }
-            else if (userInput.equalsIgnoreCase("People"))
-            {
-                validity = true;
-                category = "People";
-                break;
-            }
-            else if (userInput.equalsIgnoreCase("Geography"))
-            {
-                validity = true;
-                category = "Geography";
-                break;
-            }
-            else
-            {
-                validity = false;
-                System.out.print(
-                    "Not a valid catergory... Try again!" + "\n " + "\n");
-                System.out.print(
-                    "Please pick a catergory: Music, History, People, or Geography: ");
-                userInput = input.nextLine();
-
+                game.nextQuestion();
             }
 
+            if (game.isGameOver())
+            {
+                // nextQuestion() already printed the loss message.
+                break;
+            }
+
+            game.endCategory();
+
+            if (game.allCategoriesCompleted())
+            {
+                game.endGame(true);
+                break;
+            }
+
+            game.selectCategory();
         }
-**/
-        
-        
-         questions = questions.getQuestion(category, questionNumber);
-         questions.getPrompt(); 
-         answer = input.nextLine();
-         game.selectAnswer(answer);
-        questions.checkSolution(answer);
-        game.nextQuestion();
-        
-        
-         
-
     }
-
 }

@@ -1,61 +1,81 @@
 package trivia;
+
 /**
- *  The question class for Trivia Game, defines how a question is formatted
- *  with an array of answers, and a solution indicating the correct choice
- *  for those answer as well as a prompt which represents the question that
- *  is asked 
- * 
- *  @author emerson
- *  @version Sep 15, 2026
+ *  Represents a single trivia question: a prompt shown to the player, the
+ *  list of answer choices displayed alongside it, and the letter of the
+ *  correct choice ("A", "B", "C", or "D").
+ *
+ *  @author Emerson Molina
+ *  @version Sep 22, 2026
  */
 public class Question
 {
     //~ Fields ................................................................
-private String prompt;
-private String[] answers;
-private String solution;
-    //~ Constructors ..........................................................
-/**
- * Constructor for Question takes in a prompt, answers, and solution
- * @param prompt the question prompt given to user
- * @param answers the answers that are given to the user
- * @param solution the solution listed as right for the prompt
- */
-public Question(String prompt, String[] answers, String solution)
-{
-    this.prompt = prompt;
-    this.answers = answers;
-    this.solution = solution;
-}
-    //~Public  Methods ........................................................
-/**
- * gets the prompt for the question
- * @return prompt the prompt or actual question for a specific
- * section
- */
-public String getPrompt()
-{
-    return prompt;
-}
-/**
- * gets the answers for the question
- * @return answers the answers for the question
- */
-public String[] getAnswers()
-{
-    return answers;
-}
+    private String prompt;
+    private String[] answers;
+    private String solution;
 
-/**
- * takes in an answer and checks it with the solution
- * listed for an answer to see if its correct
- * @return true if the user input matches the answer false
- * otherwise
- * @param userAnswer the answer input by the user 
- */
-public boolean checkSolution(String userAnswer)
-{
-    return userAnswer.equalsIgnoreCase(solution);
-}
+    //~ Constructors ..........................................................
+    /**
+     * Constructs a Question from a prompt, its answer choices, and the
+     * letter of the correct choice.
+     *
+     * @param prompt the question text shown to the user
+     * @param answers the answer choices shown to the user (e.g. "A) ...")
+     * @param solution the letter ("A"-"D") of the correct answer
+     */
+    public Question(String prompt, String[] answers, String solution)
+    {
+        this.prompt = prompt;
+        this.answers = answers;
+        this.solution = solution;
+    }
+
+    //~Public  Methods ........................................................
+    /**
+     * Returns the question prompt.
+     *
+     * @return the prompt shown to the user
+     */
+    public String getPrompt()
+    {
+        return prompt;
+    }
+
+    /**
+     * Returns the answer choices for this question.
+     *
+     * @return the answer choices shown to the user
+     */
+    public String[] getAnswers()
+    {
+        return answers;
+    }
+
+    /**
+     * Returns the letter of the correct answer choice.
+     *
+     * @return the solution letter (e.g. "A")
+     */
+    public String getSolution()
+    {
+        return solution;
+    }
+
+    /**
+     * Checks a user-supplied answer against the solution, ignoring case.
+     * A null or blank answer is treated as incorrect rather than throwing.
+     *
+     * @param userAnswer the answer letter input by the user; may be null
+     * @return true if userAnswer matches the solution (case-insensitive),
+     *         false otherwise, including when userAnswer is null
+     */
+    public boolean checkSolution(String userAnswer)
+    {
+        // Calling equalsIgnoreCase on `solution` (never null in normal use)
+        // rather than on `userAnswer` means a null userAnswer safely
+        // evaluates to false instead of throwing a NullPointerException.
+        return solution.equalsIgnoreCase(userAnswer);
+    }
 
 }
