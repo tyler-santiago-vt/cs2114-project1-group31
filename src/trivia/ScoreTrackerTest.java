@@ -1,22 +1,22 @@
 package trivia;
+
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *  The test class for ScoreTracker, verifying score starts at zero,
- *  increases correctly, and resets correctly, including repeated-use
- *  edge cases.
+ * The test class for ScoreTracker, verifying score starts at zero, increases
+ * correctly, and resets correctly, including repeated-use edge cases.
  *
- *  @author Tyler Santiago
- *  @version Sep 22, 2026
+ * @author Tyler Santiago
+ * @version Sep 22, 2026
  */
 public class ScoreTrackerTest
 {
-    //~ Fields ................................................................
+    // ~ Fields ................................................................
     private ScoreTracker tracker;
 
-    //~ Constructors ..........................................................
+    // ~ Constructors ..........................................................
     /**
      * Sets up a fresh ScoreTracker before each test runs.
      */
@@ -26,7 +26,8 @@ public class ScoreTrackerTest
         tracker = new ScoreTracker();
     }
 
-    //~Public  Methods ........................................................
+    // ~Public Methods ........................................................
+
 
     /**
      * Normal case: a brand-new tracker starts at a score of 0.
@@ -37,6 +38,7 @@ public class ScoreTrackerTest
         assertEquals(0, tracker.getScore());
     }
 
+
     /**
      * Normal case: increaseScore raises the score by exactly 1.
      */
@@ -46,6 +48,7 @@ public class ScoreTrackerTest
         tracker.increaseScore();
         assertEquals(1, tracker.getScore());
     }
+
 
     /**
      * Normal case: repeated increases accumulate correctly.
@@ -60,6 +63,7 @@ public class ScoreTrackerTest
         assertEquals(5, tracker.getScore());
     }
 
+
     /**
      * Normal case: resetScore brings a non-zero score back to 0.
      */
@@ -72,9 +76,10 @@ public class ScoreTrackerTest
         assertEquals(0, tracker.getScore());
     }
 
+
     /**
-     * Edge case: resetting a tracker that was never increased should
-     * safely remain at 0, not throw or go negative.
+     * Edge case: resetting a tracker that was never increased should safely
+     * remain at 0, not throw or go negative.
      */
     @Test
     public void testResetScoreWhenAlreadyZero()
@@ -82,6 +87,7 @@ public class ScoreTrackerTest
         tracker.resetScore();
         assertEquals(0, tracker.getScore());
     }
+
 
     /**
      * Edge case: score can continue increasing normally after a reset.

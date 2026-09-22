@@ -1,28 +1,31 @@
 package trivia;
 
 /**
- *  Represents a single trivia question: a prompt shown to the player, the
- *  list of answer choices displayed alongside it, and the letter of the
- *  correct choice ("A", "B", "C", or "D").
+ * Represents a single trivia question: a prompt shown to the player, the list
+ * of answer choices displayed alongside it, and the letter of the correct
+ * choice ("A", "B", "C", or "D").
  *
- *  @author Emerson Molina
- *  @version Sep 22, 2026
+ * @author Emerson Molina
+ * @version Sep 22, 2026
  */
 public class Question
 {
-    //~ Fields ................................................................
+    // ~ Fields ................................................................
     private String prompt;
     private String[] answers;
     private String solution;
 
-    //~ Constructors ..........................................................
+    // ~ Constructors ..........................................................
     /**
-     * Constructs a Question from a prompt, its answer choices, and the
-     * letter of the correct choice.
+     * Constructs a Question from a prompt, its answer choices, and the letter
+     * of the correct choice.
      *
-     * @param prompt the question text shown to the user
-     * @param answers the answer choices shown to the user (e.g. "A) ...")
-     * @param solution the letter ("A"-"D") of the correct answer
+     * @param prompt
+     *            the question text shown to the user
+     * @param answers
+     *            the answer choices shown to the user (e.g. "A) ...")
+     * @param solution
+     *            the letter ("A"-"D") of the correct answer
      */
     public Question(String prompt, String[] answers, String solution)
     {
@@ -31,7 +34,8 @@ public class Question
         this.solution = solution;
     }
 
-    //~Public  Methods ........................................................
+
+    // ~Public Methods ........................................................
     /**
      * Returns the question prompt.
      *
@@ -41,6 +45,7 @@ public class Question
     {
         return prompt;
     }
+
 
     /**
      * Returns the answer choices for this question.
@@ -52,6 +57,7 @@ public class Question
         return answers;
     }
 
+
     /**
      * Returns the letter of the correct answer choice.
      *
@@ -62,13 +68,15 @@ public class Question
         return solution;
     }
 
+
     /**
-     * Checks a user-supplied answer against the solution, ignoring case.
-     * A null or blank answer is treated as incorrect rather than throwing.
+     * Checks a user-supplied answer against the solution, ignoring case. A null
+     * or blank answer is treated as incorrect rather than throwing.
      *
-     * @param userAnswer the answer letter input by the user; may be null
-     * @return true if userAnswer matches the solution (case-insensitive),
-     *         false otherwise, including when userAnswer is null
+     * @param userAnswer
+     *            the answer letter input by the user; may be null
+     * @return true if userAnswer matches the solution (case-insensitive), false
+     *             otherwise, including when userAnswer is null
      */
     public boolean checkSolution(String userAnswer)
     {

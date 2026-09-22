@@ -25,12 +25,22 @@ public class GameController
 
     private ScoreTracker score;
     private QuestionBank questionBank;
+
+    /**
+     * Tracks the index of the next question to ask within the currently
+     * selected category (0-9). Reset to 0 each time selectCategory() picks a
+     * new category.
+     */
     public int questionNumber;
 
     private Question[] currentCategoryQuestions;
     private boolean gameOver;
     private String category;
     private Set<String> completedCategories = new HashSet<>();
+
+    /**
+     * Reads the player's console input for category and answer prompts.
+     */
     Scanner input = new Scanner(System.in);
 
     // ~ Constructors ..........................................................

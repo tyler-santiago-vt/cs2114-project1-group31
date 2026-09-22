@@ -12,9 +12,9 @@ public class ScoreTracker
 {
     // ~ Fields ................................................................
     /**
-     * Stores the user's score throughout the trivia game. Kept private so
-     * the score can only change through increaseScore()/resetScore(),
-     * rather than being reassigned directly from outside the class.
+     * Stores the user's score throughout the trivia game. Kept private so the
+     * score can only change through increaseScore()/resetScore(), rather than
+     * being reassigned directly from outside the class.
      */
     private int score;
 

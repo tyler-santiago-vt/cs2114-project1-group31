@@ -1,4 +1,5 @@
 package trivia;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -9,27 +10,25 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *  The test class for GameController, covering category/answer
- *  validation, category and answer selection (including re-prompting on
- *  invalid or already-completed input), question flow, and game-state
- *  bookkeeping such as resetGame and allCategoriesCompleted.
+ * The test class for GameController, covering category/answer validation,
+ * category and answer selection (including re-prompting on invalid or
+ * already-completed input), question flow, and game-state bookkeeping such as
+ * resetGame and allCategoriesCompleted. Input to GameController is simulated by
+ * redirecting System.in before constructing each GameController, since its
+ * Scanner field reads from System.in at construction time.
  *
- *  Input to GameController is simulated by redirecting System.in before
- *  constructing each GameController, since its Scanner field reads from
- *  System.in at construction time.
- *
- *  @author Tyler Santiago
- *  @version Sep 22, 2026
+ * @author Tyler Santiago
+ * @version Sep 22, 2026
  */
 public class GameControllerTest
 {
-    //~ Fields ................................................................
+    // ~ Fields ................................................................
     private ScoreTracker score;
     private QuestionBank bank;
     private InputStream originalSystemIn;
     private PrintStream originalSystemOut;
 
-    //~ Constructors ..........................................................
+    // ~ Constructors ..........................................................
     /**
      * Sets up a fresh ScoreTracker and QuestionBank before each test, and
      * remembers the real System.in/System.out so they can be restored.
@@ -43,9 +42,10 @@ public class GameControllerTest
         originalSystemOut = System.out;
     }
 
+
     /**
-     * Restores the real System.in/System.out after each test, so
-     * redirecting input/output in one test can't affect another.
+     * Restores the real System.in/System.out after each test, so redirecting
+     * input/output in one test can't affect another.
      */
     @After
     public void tearDown()
@@ -54,9 +54,10 @@ public class GameControllerTest
         System.setOut(originalSystemOut);
     }
 
+
     /**
-     * Builds a GameController whose Scanner reads the given simulated
-     * console input (each line separated by \n).
+     * Builds a GameController whose Scanner reads the given simulated console
+     * input (each line separated by \n).
      */
     private GameController controllerWithInput(String simulatedInput)
     {
@@ -64,9 +65,10 @@ public class GameControllerTest
         return new GameController(score, bank);
     }
 
+
     /**
-     * Runs action while System.out is redirected, and returns everything
-     * it printed as a String.
+     * Runs action while System.out is redirected, and returns everything it
+     * printed as a String.
      */
     private String captureOutput(Runnable action)
     {
@@ -76,9 +78,10 @@ public class GameControllerTest
         return capturedOutput.toString();
     }
 
-    //~Public  Methods ........................................................
+    // ~Public Methods ........................................................
 
     // -- validAnswer ---------------------------------------------------
+
 
     /**
      * Normal case: a valid answer letter is accepted, case-insensitively.
@@ -90,6 +93,7 @@ public class GameControllerTest
         assertTrue(game.validAnswer("a"));
         assertTrue(game.validAnswer("D"));
     }
+
 
     /**
      * Bad-input case: letters outside A-D, and null, are rejected.
@@ -105,6 +109,7 @@ public class GameControllerTest
 
     // -- validCategory ---------------------------------------------------
 
+
     /**
      * Normal case: a valid category letter is accepted, case-insensitively.
      */
@@ -115,6 +120,7 @@ public class GameControllerTest
         assertTrue(game.validCategory("a"));
         assertTrue(game.validCategory("E"));
     }
+
 
     /**
      * Bad-input case: letters outside A-E, and null, are rejected.
@@ -130,6 +136,7 @@ public class GameControllerTest
 
     // -- selectAnswer ---------------------------------------------------
 
+
     /**
      * Normal case: a valid answer on the first try is returned, upper-cased.
      */
@@ -140,9 +147,10 @@ public class GameControllerTest
         assertEquals("B", game.selectAnswer());
     }
 
+
     /**
-     * Bad-input case: invalid entries are skipped, re-prompting until a
-     * valid answer is given.
+     * Bad-input case: invalid entries are skipped, re-prompting until a valid
+     * answer is given.
      */
     @Test
     public void testSelectAnswerReprompsOnInvalidInput()
@@ -153,9 +161,10 @@ public class GameControllerTest
 
     // -- selectCategory ---------------------------------------------------
 
+
     /**
-     * Normal case: a valid category letter selects that category and
-     * resets questionNumber to 0.
+     * Normal case: a valid category letter selects that category and resets
+     * questionNumber to 0.
      */
     @Test
     public void testSelectCategoryValidInput()
@@ -167,9 +176,10 @@ public class GameControllerTest
         assertTrue(game.hasMoreQuestions());
     }
 
+
     /**
-     * Bad-input case: invalid category letters are skipped, re-prompting
-     * until a valid one is given.
+     * Bad-input case: invalid category letters are skipped, re-prompting until
+     * a valid one is given.
      */
     @Test
     public void testSelectCategoryReprompsOnInvalidInput()
@@ -179,11 +189,12 @@ public class GameControllerTest
         assertEquals("animals", game.getCategory());
     }
 
+
     /**
-     * Bad-input case: a category that has already been completed can't
-     * be selected again; the method re-prompts until a fresh category
-     * is chosen. This also confirms endCategory() actually marked the
-     * category as completed in the first place.
+     * Bad-input case: a category that has already been completed can't be
+     * selected again; the method re-prompts until a fresh category is chosen.
+     * This also confirms endCategory() actually marked the category as
+     * completed in the first place.
      */
     @Test
     public void testSelectCategoryRejectsAlreadyCompletedCategory()
@@ -191,16 +202,17 @@ public class GameControllerTest
         GameController game = controllerWithInput("A\nA\nB\n");
         game.selectCategory();   // picks animals
         game.endCategory();     // marks animals completed
-        game.selectCategory();  // "A" is rejected (already completed), falls through to "B"
+        game.selectCategory();  // "A" is rejected (already completed), falls
+                                // through to "B"
         assertEquals("music", game.getCategory());
     }
 
     // -- nextQuestion ---------------------------------------------------
 
+
     /**
      * Normal case: answering the first animal question correctly ("B")
-     * increases the score and advances questionNumber, without ending
-     * the game.
+     * increases the score and advances questionNumber, without ending the game.
      */
     @Test
     public void testNextQuestionCorrectAnswer()
@@ -214,9 +226,10 @@ public class GameControllerTest
         assertFalse(game.isGameOver());
     }
 
+
     /**
-     * Bad-input case: answering incorrectly ends the game without
-     * advancing the score or questionNumber.
+     * Bad-input case: answering incorrectly ends the game without advancing the
+     * score or questionNumber.
      */
     @Test
     public void testNextQuestionWrongAnswerEndsGame()
@@ -233,9 +246,10 @@ public class GameControllerTest
 
     // -- hasMoreQuestions ---------------------------------------------------
 
+
     /**
-     * Normal case: false before any category is selected, true right
-     * after selecting one.
+     * Normal case: false before any category is selected, true right after
+     * selecting one.
      */
     @Test
     public void testHasMoreQuestions()
@@ -246,9 +260,10 @@ public class GameControllerTest
         assertTrue(game.hasMoreQuestions());
     }
 
+
     /**
-     * Edge case: once the game is over, hasMoreQuestions is false even
-     * though the category still has unanswered questions left in it.
+     * Edge case: once the game is over, hasMoreQuestions is false even though
+     * the category still has unanswered questions left in it.
      */
     @Test
     public void testHasMoreQuestionsFalseAfterGameOver()
@@ -259,7 +274,9 @@ public class GameControllerTest
         assertFalse(game.hasMoreQuestions());
     }
 
-    // -- allCategoriesCompleted ---------------------------------------------------
+    // -- allCategoriesCompleted
+    // ---------------------------------------------------
+
 
     /**
      * Normal case: false for a freshly started game.
@@ -271,9 +288,9 @@ public class GameControllerTest
         assertFalse(game.allCategoriesCompleted());
     }
 
+
     /**
-     * Normal case: true once all 5 categories have been selected and
-     * completed.
+     * Normal case: true once all 5 categories have been selected and completed.
      */
     @Test
     public void testAllCategoriesCompletedTrueAfterAllFive()
@@ -291,15 +308,16 @@ public class GameControllerTest
 
     // -- resetGame ---------------------------------------------------
 
+
     /**
-     * Normal case: resetGame restores every piece of state to its
-     * starting defaults, even after the game has been played partway
-     * through and lost.
+     * Normal case: resetGame restores every piece of state to its starting
+     * defaults, even after the game has been played partway through and lost.
      */
     @Test
     public void testResetGameRestoresDefaults()
     {
-        GameController game = controllerWithInput("A\nA\n"); // wrong answer -> game over
+        GameController game = controllerWithInput("A\nA\n"); // wrong answer ->
+                                                             // game over
         game.selectCategory();
         game.nextQuestion();
         assertTrue(game.isGameOver());
@@ -316,6 +334,7 @@ public class GameControllerTest
 
     // -- getCategory ---------------------------------------------------
 
+
     /**
      * Normal case: before any selection, getCategory is empty.
      */
@@ -326,11 +345,13 @@ public class GameControllerTest
         assertEquals("", game.getCategory());
     }
 
-    // -- endGame / endCategory (console output) ---------------------------------------------------
+    // -- endGame / endCategory (console output)
+    // ---------------------------------------------------
+
 
     /**
-     * Normal case: endGame(true) reports the current score in its
-     * printed win message.
+     * Normal case: endGame(true) reports the current score in its printed win
+     * message.
      */
     @Test
     public void testEndGameWinMessageIncludesScore()
@@ -344,9 +365,10 @@ public class GameControllerTest
         assertTrue(output.contains("1"));
     }
 
+
     /**
-     * Bad-input/edge case: endGame(false) reports a loss message rather
-     * than the win message.
+     * Bad-input/edge case: endGame(false) reports a loss message rather than
+     * the win message.
      */
     @Test
     public void testEndGameLossMessage()
@@ -358,9 +380,10 @@ public class GameControllerTest
         assertTrue(output.contains("Game Over"));
     }
 
+
     /**
-     * Edge case: endCategory prints its score message even if no
-     * category was ever selected, and should not throw.
+     * Edge case: endCategory prints its score message even if no category was
+     * ever selected, and should not throw.
      */
     @Test
     public void testEndCategoryWithoutSelectionDoesNotThrow()
